@@ -1,0 +1,24 @@
+{
+	"id": "com.palm.app.browser",
+	"version": "1.0.0",
+	"vendor": "HP",
+	"type": "web",
+	"main": "index.html",
+	"title": "Web",
+	"keywords" : [ "web", "Browser", "Blazer", "Internet" ],
+	"icon": "icon.png",
+	"splashicon": "icon-256x256.png",
+	"uiRevision": 2,
+	"tapToShareSupported":true,
+	"universalSearch": {
+		"dbsearch": {
+			"displayName":"Bookmarks & History",
+			"url":"com.palm.app.browser",
+			"launchParam":"url",
+			"launchParamDbField":"url",
+			"displayFields": ["title", "url"],
+			"dbQuery": [{"method":"search","params":{"query":{"from":"com.palm.browserbookmarks:1","where":[{"prop":"searchText","op":"?","val":"","collate":"primary"}],"limit":20}}},{"method":"search","params":{"query":{"from":"com.palm.browserhistory:1","where":[{"prop":"searchText","op":"?","val":"","collate":"primary"}],"limit":50}}}],
+			"batchQuery":true
+		}
+	}
+}

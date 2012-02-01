@@ -1,0 +1,24 @@
+{
+    results: [
+    {
+        title: "Google",
+        url: "http://www.google.com",
+        thumbnailFile: "images/header-icon-history.png"
+    },
+    {
+        title: "CNN",
+        url: "http://www.cnn.com",
+        thumbnailFile: "images/header-icon-history.png"
+    },
+    {
+        title: "Google",
+        url: "http://www.google.com",
+        thumbnailFile: "images/header-icon-history.png"
+    },
+    {
+        title: "CNN",
+        url: "http://www.cnn.com",
+        thumbnailFile: "images/header-icon-history.png"
+    }
+    ]
+}

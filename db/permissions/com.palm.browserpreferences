@@ -1,0 +1,12 @@
+[
+	{	"type"		: "db.kind"
+	,	"object"	: "com.palm.browserpreferences:1"
+	,	"caller"	: "com.palm.app.enyo-browser"
+	,	"operations":
+		{	"create": "allow"
+		,	"read"	: "allow"
+		,	"update": "allow"
+		,	"delete": "allow"
+		}
+	}
+]

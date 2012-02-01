@@ -1,0 +1,11 @@
+{
+	"id":"com.palm.browserbookmarks:1",
+	"owner":"com.palm.app.browser",
+	"indexes":[	{"name":"rev","props":[{"name":"_rev"}]},
+				{"name": "url", "props": [{"name": "url"}] },
+				{"name": "title", "props": [{"name": "title"}] },
+				{"name": "search", "props": [{"name":"searchText", "type":"multi","collate":"primary","include":[{"name":"title","tokenize":"all"},{"name":"url","tokenize":"all"}]}]},
+				{"name": "defaultEntry", "props": [{"name": "defaultEntry"}] },
+				{"name": "idx", "props": [{"name": "idx"}] }],
+	"sync": true
+}

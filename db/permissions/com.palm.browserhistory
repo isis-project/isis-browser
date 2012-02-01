@@ -1,0 +1,18 @@
+[	{	"type"		: "db.kind"
+	,	"object"	: "com.palm.browserhistory:1"
+	,	"caller"	: "com.palm.app.enyo-browser"
+	,	"operations":
+		{	"create": "allow"
+		,	"read"	: "allow"
+		,	"update": "allow"
+		,	"delete": "allow"
+		}
+	},	
+	{	"type"		: "db.kind"
+	,	"object"	: "com.palm.browserhistory:1"
+	,	"caller"	: "com.palm.launcher"
+	,	"operations":
+		{	"read"	: "allow"
+		}
+	}
+]

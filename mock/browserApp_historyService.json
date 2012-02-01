@@ -1,0 +1,41 @@
+{
+    "returnValue": true,
+    "results": [
+    {
+        "title": "Google",
+        "url": "http://www.google.com",
+        "thumbnailFile": "images/header-icon-history.png",
+        "date": 1300224386683
+    },
+    {
+        "title": "CNN",
+        "url": "http://www.cnn.com",
+        "thumbnailFile": "images/header-icon-history.png",
+        "date": 1300138094718
+    },
+    {
+        "title": "Google",
+        "url": "http://www.google.com",
+        "thumbnailFile": "images/header-icon-history.png",
+        "date": 1299878924431
+    },
+    {
+        "title": "CNN",
+        "url": "http://www.cnn.com",
+        "thumbnailFile": "images/header-icon-history.png",
+        "date": 1297459724431
+    },
+    {
+        "title": "Google",
+        "url": "http://www.google.com",
+        "thumbnailFile": "images/header-icon-history.png",
+        "date": 1294781324431
+    },
+    {
+        "title": "CNN",
+        "url": "http://www.cnn.com",
+        "thumbnailFile": "images/header-icon-history.png",
+        "date": 0
+    }
+    ]
+}

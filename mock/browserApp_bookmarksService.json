@@ -1,0 +1,15 @@
+{
+    "results": [
+    {
+        "title": "Google",
+        "url": "http://www.google.com",
+        "thumbnailFile": "images/bookmark-icon-default.png"
+    },
+    {
+        "title": "CNN",
+        "url": "http://www.cnn.com",
+        "thumbnailFile": "images/bookmark-icon-default.png"
+    }
+    ],
+    "returnValue": true
+}

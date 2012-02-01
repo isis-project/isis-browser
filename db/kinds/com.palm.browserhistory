@@ -1,0 +1,11 @@
+{
+	"id":"com.palm.browserhistory:1",
+	"owner":"com.palm.app.browser",
+	"indexes":[	{"name": "url", "props": [{"name": "url"}] },
+				{"name": "title", "props": [{"name": "title"}] },
+				{"name": "search", "props": [{"name":"searchText", "type":"multi", "collate":"primary","include":[{"name":"title","tokenize":"all"},
+				{"name":"url","tokenize":"all"}]}]},
+				{"name": "date", "props": [{"name": "date"}] },
+				{"name": "revision", "props": [{"name": "_rev"}] }],
+	"sync": true
+}

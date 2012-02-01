@@ -1,0 +1,21 @@
+{
+    "returnValue": true,
+    "results": [
+    {
+        "key": "blockPopups",
+        "value": true
+    },
+    {
+        "key": "acceptCookies",
+        "value": true
+    },
+    {
+        "key": "enableJavascript",
+        "value": true
+    },
+    {
+        "key": "rememberPasswords",
+        "value": true
+    }
+    ]
+}
