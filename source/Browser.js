@@ -86,14 +86,12 @@ enyo.kind({
 			{name: "promptMessage", className: "browser-dialog-body enyo-text-body "},
 			{name: "promptInput", kind: "Input", spellcheck: false, autocorrect: false, autoCapitalize: "lowercase"}
 		]},
+		{name: "shareLinkDialog", kind: "ShareLinkDialog"},
 		{name: "loginDialog", kind: "AcceptCancelPopup", onResponse: "loginResponse", onClose: "closeLogin", components: [
 			{name: "loginMessage", className: "browser-dialog-body enyo-text-body "},
 			{name: "userInput", kind: "Input", spellcheck: false, autocorrect: false, autoCapitalize: "lowercase", hint: $L("Username...")},
 			{name: "passwordInput", kind: "PasswordInput", hint: $L("Password...")}
 		]},
-        {name: "shareLinkDialog", kind: "AcceptCancelPopup", onResponse: "shareLinkResponse", onClose: "closeShareLink", components: [
-            {name: "shareMessage", className: "browser-dialog-body enyo-text-body "},
-        ]},
 		{name: "sslDialog", kind: "Popup", onClose: "sslConfirmResponse", components: [
 			{name: "sslConfirmMessage", className: "browser-dialog-body enyo-text-body "},
 			{kind: enyo.HFlexBox, components: [
@@ -238,15 +236,11 @@ enyo.kind({
 		this.showPopup(this.$.promptDialog);
 	},
     showShareLinkDialog: function(inSender, inUrl, inTitle) {
-        this.$.shareLinkDialog.validateComponents();
         this.showPopup(this.$.shareLinkDialog);
     },
 	promptResponse: function(inAccept) {
 		this.sendDialogResponse(this, inAccept, this.$.promptInput.getValue() || this.$.promptInput.getHint());
 	},
-    shareLinkResponse: function(inAccept) {
-        this.log("response");
-    },
 	closePrompt: function() {
 		this.$.promptInput.forceBlur();
 	},
@@ -316,9 +310,6 @@ enyo.kind({
 		this.$.userInput.forceBlur();
 		this.$.passwordInput.forceBlur();
 	},
-    closeShareLink: function() {
-        this.log("close share");
-    },
 	openContextMenu: function(inSender, inEvent, inTapInfo) {
 		if (inTapInfo.isLink || inTapInfo.isImage) {
 			this.$.context.openAtTap(inEvent, inTapInfo);
