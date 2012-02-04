@@ -91,6 +91,9 @@ enyo.kind({
 			{name: "userInput", kind: "Input", spellcheck: false, autocorrect: false, autoCapitalize: "lowercase", hint: $L("Username...")},
 			{name: "passwordInput", kind: "PasswordInput", hint: $L("Password...")}
 		]},
+        {name: "shareLinkDialog", kind: "AcceptCancelPopup", onResponse: "shareLinkResponse", onClose: "closeShareLink", components: [
+            {name: "shareMessage", className: "browser-dialog-body enyo-text-body "},
+        ]},
 		{name: "sslDialog", kind: "Popup", onClose: "sslConfirmResponse", components: [
 			{name: "sslConfirmMessage", className: "browser-dialog-body enyo-text-body "},
 			{kind: enyo.HFlexBox, components: [
@@ -234,9 +237,16 @@ enyo.kind({
 		this.$.promptInput.setHint(inDefaultValue);
 		this.showPopup(this.$.promptDialog);
 	},
+    showShareLinkDialog: function(inSender, inUrl, inTitle) {
+        this.$.shareLinkDialog.validateComponents();
+        this.showPopup(this.$.shareLinkDialog);
+    },
 	promptResponse: function(inAccept) {
 		this.sendDialogResponse(this, inAccept, this.$.promptInput.getValue() || this.$.promptInput.getHint());
 	},
+    shareLinkResponse: function(inAccept) {
+        this.log("response");
+    },
 	closePrompt: function() {
 		this.$.promptInput.forceBlur();
 	},
@@ -306,6 +316,9 @@ enyo.kind({
 		this.$.userInput.forceBlur();
 		this.$.passwordInput.forceBlur();
 	},
+    closeShareLink: function() {
+        this.log("close share");
+    },
 	openContextMenu: function(inSender, inEvent, inTapInfo) {
 		if (inTapInfo.isLink || inTapInfo.isImage) {
 			this.$.context.openAtTap(inEvent, inTapInfo);
@@ -331,12 +344,14 @@ enyo.kind({
 		var params = enyo.json.stringify({dontLaunch:true});
 		enyo.windows.addBannerMessage($L("Link Copied to clipboard"), params);
 	},
+    //TODO: function unused? remove?
 	shareLinkClick: function(inTapInfo) {
 		this.shareLink(inTapInfo.linkUrl, inTapInfo.linkText || inTapInfo.linkUrl);
 	},
 	shareLink: function(inUrl, inTitle) {
+        this.showShareLinkDialog(inUrl, inTitle);
 		this.log(inUrl, inTitle);
-		var msg = $L("Here's a website I think you'll like: <a href=\"{$src}\">{$title}</a>");
+		/*var msg = $L("Here's a website I think you'll like: <a href=\"{$src}\">{$title}</a>");
 		msg = enyo.macroize(msg, {src: inUrl, title: inTitle || inUrl});
 		var params = {
 			summary: $L("Check out this web page..."),
@@ -344,6 +359,7 @@ enyo.kind({
 		};
 		this.log(params.text);
 		this.$.launchApplicationService.call({id: "com.palm.app.email", params: params});
+        */
 	},
 	copyToPhotosClick: function(inTapInfo, inPosition) {
 		this.viewCall("saveImageAtPoint", [inPosition.left, inPosition.top, "/media/internal",
