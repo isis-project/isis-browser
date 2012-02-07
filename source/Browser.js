@@ -350,6 +350,8 @@ enyo.kind({
             this.shareLinkViaEmail(this.url, this.title);
         } else if (shareServiceType === "messaging") {
             this.shareLinkViaMessaging(this.url, this.title);
+        } else if (shareServiceType === "facebook") {
+            this.shareLinkViaFacebook(this.url, this.title);
         }
     },
     shareLinkViaEmail: function (inUrl, inTitle) {
@@ -370,6 +372,15 @@ enyo.kind({
             }
         };
         this.$.launchApplicationService.call({id: "com.palm.app.messaging", params: params});
+    },
+    shareLinkViaFacebook: function (inUrl, inTitle) {
+        this.log("sharing via facebok");
+        var params = {
+            type: "status",
+            statusText: "Check out this link: " + inUrl
+        };
+        this.log(params.statusText);
+        this.$.launchApplicationService.call({id: "com.palm.app.enyo-facebook", params: params});
     },
 	copyToPhotosClick: function(inTapInfo, inPosition) {
 		this.viewCall("saveImageAtPoint", [inPosition.left, inPosition.top, "/media/internal",
