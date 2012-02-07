@@ -15,13 +15,17 @@
 enyo.kind({
     name: "ShareLinkDialog",
     kind: "AcceptCancelPopup",
-    onResponse: "shareLinkResponse",
-    onClose: "closeShareLink",
     events: {
         onShareClicked: ""
     },
+    SHARE_LINK_LIST: [
+        {title: "Email", image: "/email.png", type: "email"},
+        {title: "Messaging", image: "/messaging.png", type: "messaging"},
+        {title: "Facebook", image: "/facebook.png", type: "facebook"},
+        {title: "Twitter", image: "/twitter.png", type: "twitter"} 
+    ],
     components: [
-        {name: "shareMessage", className: "enyo-modaldialog-title"},
+        {name: "shareMessage", content: "Share link via", className: "enyo-modaldialog-title"},
         {name: "shareList", kind: "VirtualRepeater", onSetupRow: "getItem", components: [{
                 kind: "HFlexBox",
                 components: [{
@@ -30,32 +34,32 @@ enyo.kind({
                 }, {
                     name: "button",
                     kind: "Button",
-                    type: "",
                     onclick: "buttonClick"
                 }]   
             }]
         }
     ],
+    url: "",
+    title: "",
+    init: function (url, title) {
+        this.url = url;
+        this.title = title;
+    },
     getItem: function (inSender, inIndex) {
-        this.$.shareMessage.setContent("Share link via");
-        if (inIndex < 1) {
-            this.$.caption.setContent("Email");
-            this.$.button.type = "email",
+        if (inIndex < this.SHARE_LINK_LIST.length) {
+            this.$.shareMessage.setContent("Share link via");
+
+            var itemDefinition = this.SHARE_LINK_LIST[inIndex];
+            this.$.caption.setContent(itemDefinition.title);
             this.$.button.setCaption("ok");
-            return true
+            this.$.button.type = itemDefinition.type;
+            return true;
         }
     },
     buttonClick: function (inSender, inEvent) {
-        var button = inSender;
-        this.log("in button click");
-        this.log("button type - " + button.type);
-        this.doShareClicked(button.type);
+        var shareServiceType = this.SHARE_LINK_LIST[inEvent.rowIndex].type;
+        this.log("share service type - " + shareServiceType);
+        this.doShareClicked();
         this.close();
-    },
-    shareLinkResponse: function(inAccept) {
-        this.log("response");
-    },
-    closeShareLink: function() {
-        this.log("close share");
     }
 });

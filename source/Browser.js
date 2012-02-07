@@ -86,7 +86,7 @@ enyo.kind({
 			{name: "promptMessage", className: "browser-dialog-body enyo-text-body "},
 			{name: "promptInput", kind: "Input", spellcheck: false, autocorrect: false, autoCapitalize: "lowercase"}
 		]},
-		{name: "shareLinkDialog", kind: "ShareLinkDialog", onShareClicked: "shareResponse"},
+		{name: "shareLinkDialog", kind: "ShareLinkDialog", onShareClicked: "shareLinkResponse"},
 		{name: "loginDialog", kind: "AcceptCancelPopup", onResponse: "loginResponse", onClose: "closeLogin", components: [
 			{name: "loginMessage", className: "browser-dialog-body enyo-text-body "},
 			{name: "userInput", kind: "Input", spellcheck: false, autocorrect: false, autoCapitalize: "lowercase", hint: $L("Username...")},
@@ -236,6 +236,7 @@ enyo.kind({
 		this.showPopup(this.$.promptDialog);
 	},
     showShareLinkDialog: function(inSender, inUrl, inTitle) {
+        this.$.shareLinkDialog.init(inUrl, inTitle);
         this.showPopup(this.$.shareLinkDialog);
     },
 	promptResponse: function(inAccept) {
