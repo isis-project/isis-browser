@@ -59,7 +59,7 @@ enyo.kind({
     buttonClick: function (inSender, inEvent) {
         var shareServiceType = this.SHARE_LINK_LIST[inEvent.rowIndex].type;
         this.log("share service type - " + shareServiceType);
-        this.doShareClicked();
+        this.doShareClicked(shareServiceType);
         this.close();
     }
 });

@@ -344,8 +344,13 @@ enyo.kind({
         this.showShareLinkDialog(inUrl, inTitle);
 		this.log(inUrl, inTitle);
 	},
-    shareLinkResponse: function (shareServiceType) {
-        this.shareLinkViaEmail(this.url, this.title);
+    shareLinkResponse: function (inSender, inEvent) {
+        var shareServiceType = inEvent;
+        if (shareServiceType === "email") {
+            this.shareLinkViaEmail(this.url, this.title);
+        } else if (shareServiceType === "messaging") {
+            this.shareLinkViaMessaging(this.url, this.title);
+        }
     },
     shareLinkViaEmail: function (inUrl, inTitle) {
 	    var msg = $L("Here's a website I think you'll like: <a href=\"{$src}\">{$title}</a>");
@@ -356,6 +361,15 @@ enyo.kind({
 		};
 		this.log(params.text);
 		this.$.launchApplicationService.call({id: "com.palm.app.email", params: params});
+    },
+    shareLinkViaMessaging: function (inUrl, inTitle) {
+        this.log("sharing via messaging");
+        var params = {
+            compose: {
+                messageText: "Check out this link: " + inUrl
+            }
+        };
+        this.$.launchApplicationService.call({id: "com.palm.app.messaging", params: params});
     },
 	copyToPhotosClick: function(inTapInfo, inPosition) {
 		this.viewCall("saveImageAtPoint", [inPosition.left, inPosition.top, "/media/internal",
