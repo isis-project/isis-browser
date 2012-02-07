@@ -17,9 +17,41 @@ enyo.kind({
     kind: "AcceptCancelPopup",
     onResponse: "shareLinkResponse",
     onClose: "closeShareLink",
+    events: {
+        onShareClicked: ""
+    },
     components: [
-        {name: "shareMessage", className: "browser-dialog-body enyo-text-body "}
+        {name: "shareMessage", className: "enyo-modaldialog-title"},
+        {name: "shareList", kind: "VirtualRepeater", onSetupRow: "getItem", components: [{
+                kind: "HFlexBox",
+                components: [{
+                    name: "caption",
+                    flex: 1
+                }, {
+                    name: "button",
+                    kind: "Button",
+                    type: "",
+                    onclick: "buttonClick"
+                }]   
+            }]
+        }
     ],
+    getItem: function (inSender, inIndex) {
+        this.$.shareMessage.setContent("Share link via");
+        if (inIndex < 1) {
+            this.$.caption.setContent("Email");
+            this.$.button.type = "email",
+            this.$.button.setCaption("ok");
+            return true
+        }
+    },
+    buttonClick: function (inSender, inEvent) {
+        var button = inSender;
+        this.log("in button click");
+        this.log("button type - " + button.type);
+        this.doShareClicked(button.type);
+        this.close();
+    },
     shareLinkResponse: function(inAccept) {
         this.log("response");
     },

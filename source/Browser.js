@@ -86,7 +86,7 @@ enyo.kind({
 			{name: "promptMessage", className: "browser-dialog-body enyo-text-body "},
 			{name: "promptInput", kind: "Input", spellcheck: false, autocorrect: false, autoCapitalize: "lowercase"}
 		]},
-		{name: "shareLinkDialog", kind: "ShareLinkDialog"},
+		{name: "shareLinkDialog", kind: "ShareLinkDialog", onShareClicked: "shareResponse"},
 		{name: "loginDialog", kind: "AcceptCancelPopup", onResponse: "loginResponse", onClose: "closeLogin", components: [
 			{name: "loginMessage", className: "browser-dialog-body enyo-text-body "},
 			{name: "userInput", kind: "Input", spellcheck: false, autocorrect: false, autoCapitalize: "lowercase", hint: $L("Username...")},
@@ -342,7 +342,12 @@ enyo.kind({
 	shareLink: function(inUrl, inTitle) {
         this.showShareLinkDialog(inUrl, inTitle);
 		this.log(inUrl, inTitle);
-		/*var msg = $L("Here's a website I think you'll like: <a href=\"{$src}\">{$title}</a>");
+	},
+    shareLinkResponse: function (shareServiceType) {
+        this.shareLinkViaEmail(this.url, this.title);
+    },
+    shareLinkViaEmail: function (inUrl, inTitle) {
+	    var msg = $L("Here's a website I think you'll like: <a href=\"{$src}\">{$title}</a>");
 		msg = enyo.macroize(msg, {src: inUrl, title: inTitle || inUrl});
 		var params = {
 			summary: $L("Check out this web page..."),
@@ -350,8 +355,7 @@ enyo.kind({
 		};
 		this.log(params.text);
 		this.$.launchApplicationService.call({id: "com.palm.app.email", params: params});
-        */
-	},
+    },
 	copyToPhotosClick: function(inTapInfo, inPosition) {
 		this.viewCall("saveImageAtPoint", [inPosition.left, inPosition.top, "/media/internal",
 			enyo.hitch(this, "finishCopyToPhotos", inTapInfo)]);
