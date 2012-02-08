@@ -20,11 +20,11 @@ enyo.kind({
         onShareClicked: ""
     },
     SHARE_LINK_LIST: [{
-        title: "Email", 
+        title: $L("Email"), 
         image: "images/icons/email-32x32.png", 
         type: "email"
     },{
-        title: "Messaging", 
+        title: $L("Messaging"), 
         image: "images/icons/messaging-32x32.png",
         type: "messaging"
     },{
@@ -34,7 +34,7 @@ enyo.kind({
     }],
     components: [{
         name: "shareMessage",
-        content: "Share Link",
+        content: $L("Share Link"),
         className: "enyo-modaldialog-title"
     },{
         kind: "Control",
@@ -50,8 +50,8 @@ enyo.kind({
                 layoutKind: "HFlexLayout",
                 align:"center",
                 components: [{
-                    kind: "Image",
                     name: "icon",
+                    kind: "Image",
                     className: "icon-image"
                 }, {
                     name: "caption",
