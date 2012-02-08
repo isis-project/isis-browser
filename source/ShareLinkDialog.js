@@ -21,7 +21,7 @@ enyo.kind({
     SHARE_LINK_LIST: [
         {title: "Email", image: "/email.png", type: "email"},
         {title: "Messaging", image: "/messaging.png", type: "messaging"},
-       {title: "Facebook", image: "/facebook.png", type: "facebook"}
+        {title: "Facebook", image: "/facebook.png", type: "facebook"}
     ],
     components: [
         {name: "shareMessage", content: "Share link via", className: "enyo-modaldialog-title"},
