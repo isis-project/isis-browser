@@ -113,6 +113,8 @@ enyo.kind({
         this.log(params.compose.messageText);
         this.$.launchApplicationService.call({id: "com.palm.app.messaging", params: params});
     },
+    //TODO: handle where there is no facebook app installed on device.
+    //should launch app catalog and go to facebook install page.
     shareLinkViaFacebook: function () {
         this.log("sharing via facebok");
         var params = {
