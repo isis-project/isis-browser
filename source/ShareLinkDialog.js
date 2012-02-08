@@ -15,29 +15,50 @@
 enyo.kind({
     name: "ShareLinkDialog",
     kind: "AcceptCancelPopup",
+    acceptCaption: "", // Don't want the accept button, set caption to ""
     events: {
         onShareClicked: ""
     },
-    SHARE_LINK_LIST: [
-        {title: "Email", image: "/email.png", type: "email"},
-        {title: "Messaging", image: "/messaging.png", type: "messaging"},
-        {title: "Facebook", image: "/facebook.png", type: "facebook"}
-    ],
-    components: [
-        {name: "shareMessage", content: "Share link via", className: "enyo-modaldialog-title"},
-        {name: "shareList", kind: "VirtualRepeater", onSetupRow: "getItem", components: [{
-                kind: "HFlexBox",
+    SHARE_LINK_LIST: [{
+        title: "Email", 
+        image: "images/icons/email-32x32.png", 
+        type: "email"
+    },{
+        title: "Messaging", 
+        image: "images/icons/messaging-32x32.png",
+        type: "messaging"
+    },{
+        title: "Facebook",
+        image: "images/icons/facebook-32x32.png",
+        type: "facebook"
+    }],
+    components: [{
+        name: "shareMessage",
+        content: "Share Link",
+        className: "enyo-modaldialog-title"
+    },{
+        kind: "Control",
+        className:"box-center",
+        style:"margin-top:24px",
+        components: [{
+            name: "shareList", 
+            kind: "VirtualRepeater", 
+            onclick: "shareButtonClicked", 
+            onSetupRow: "getItem", 
+            components: [{
+                kind: "Button",
+                layoutKind: "HFlexLayout",
+                align:"center",
                 components: [{
-                    name: "caption",
-                    flex: 1
+                    kind: "Image",
+                    name: "icon",
+                    className: "icon-image"
                 }, {
-                    name: "button",
-                    kind: "Button",
-                    onclick: "buttonClick"
+                    name: "caption",
                 }]   
             }]
-        }
-    ],
+        }]
+    }],
     url: "",
     title: "",
     init: function (url, title) {
@@ -46,16 +67,17 @@ enyo.kind({
     },
     getItem: function (inSender, inIndex) {
         if (inIndex < this.SHARE_LINK_LIST.length) {
-            this.$.shareMessage.setContent("Share link via");
+            if (!this.$.shareMessage.getContent()) {
+                this.$.shareMessage.setContent("Share link via");
+            }
 
             var itemDefinition = this.SHARE_LINK_LIST[inIndex];
+            this.$.icon.setSrc(itemDefinition.image);
             this.$.caption.setContent(itemDefinition.title);
-            this.$.button.setCaption("ok");
-            this.$.button.type = itemDefinition.type;
             return true;
         }
     },
-    buttonClick: function (inSender, inEvent) {
+    shareButtonClicked: function (inSender, inEvent) {
         var shareServiceType = this.SHARE_LINK_LIST[inEvent.rowIndex].type;
         this.log("share service type - " + shareServiceType);
         this.doShareClicked(shareServiceType);
