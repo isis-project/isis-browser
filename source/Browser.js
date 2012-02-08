@@ -235,7 +235,7 @@ enyo.kind({
 		this.$.promptInput.setHint(inDefaultValue);
 		this.showPopup(this.$.promptDialog);
 	},
-    showShareLinkDialog: function(inSender, inUrl, inTitle) {
+    showShareLinkDialog: function(inUrl, inTitle) {
         this.$.shareLinkDialog.init(inUrl, inTitle);
         this.showPopup(this.$.shareLinkDialog);
     },
@@ -344,44 +344,6 @@ enyo.kind({
         this.showShareLinkDialog(inUrl, inTitle);
 		this.log(inUrl, inTitle);
 	},
-    shareLinkResponse: function (inSender, inEvent) {
-        var shareServiceType = inEvent;
-        if (shareServiceType === "email") {
-            this.shareLinkViaEmail(this.url, this.title);
-        } else if (shareServiceType === "messaging") {
-            this.shareLinkViaMessaging(this.url, this.title);
-        } else if (shareServiceType === "facebook") {
-            this.shareLinkViaFacebook(this.url, this.title);
-        }
-    },
-    shareLinkViaEmail: function (inUrl, inTitle) {
-	    var msg = $L("Here's a website I think you'll like: <a href=\"{$src}\">{$title}</a>");
-		msg = enyo.macroize(msg, {src: inUrl, title: inTitle || inUrl});
-		var params = {
-			summary: $L("Check out this web page..."),
-			text: msg
-		};
-		this.log(params.text);
-		this.$.launchApplicationService.call({id: "com.palm.app.email", params: params});
-    },
-    shareLinkViaMessaging: function (inUrl, inTitle) {
-        this.log("sharing via messaging");
-        var params = {
-            compose: {
-                messageText: "Check out this link: " + inUrl
-            }
-        };
-        this.$.launchApplicationService.call({id: "com.palm.app.messaging", params: params});
-    },
-    shareLinkViaFacebook: function (inUrl, inTitle) {
-        this.log("sharing via facebok");
-        var params = {
-            type: "status",
-            statusText: "Check out this link: " + inUrl
-        };
-        this.log(params.statusText);
-        this.$.launchApplicationService.call({id: "com.palm.app.enyo-facebook", params: params});
-    },
 	copyToPhotosClick: function(inTapInfo, inPosition) {
 		this.viewCall("saveImageAtPoint", [inPosition.left, inPosition.top, "/media/internal",
 			enyo.hitch(this, "finishCopyToPhotos", inTapInfo)]);

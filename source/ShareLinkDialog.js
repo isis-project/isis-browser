@@ -33,6 +33,11 @@ enyo.kind({
         type: "facebook"
     }],
     components: [{
+		name: "launchApplicationService",
+        kind: enyo.PalmService,
+        service: enyo.palmServices.application,
+        method: "open"
+    },{
         name: "shareMessage",
         content: $L("Share Link"),
         className: "enyo-modaldialog-title"
@@ -80,7 +85,41 @@ enyo.kind({
     shareButtonClicked: function (inSender, inEvent) {
         var shareServiceType = this.SHARE_LINK_LIST[inEvent.rowIndex].type;
         this.log("share service type - " + shareServiceType);
-        this.doShareClicked(shareServiceType);
+        if (shareServiceType === "email") {
+            this.shareLinkViaEmail();
+        } else if (shareServiceType === "messaging") {
+            this.shareLinkViaMessaging();
+        } else if (shareServiceType === "facebook") {
+            this.shareLinkViaFacebook();
+        }
         this.close();
+    },
+    shareLinkViaEmail: function () {
+	    var msg = $L("Here's a website I think you'll like: <a href=\"{$src}\">{$title}</a>");
+		msg = enyo.macroize(msg, {src: this.url, title: this.title || this.url});
+		var params = {
+			summary: $L("Check out this web page..."),
+			text: msg
+		};
+		this.log(params.text);
+		this.$.launchApplicationService.call({id: "com.palm.app.email", params: params});
+    },
+    shareLinkViaMessaging: function () {
+        var params = {
+            compose: {
+                messageText: $L("Check out this web page: ") + this.url
+            }
+        };
+        this.log(params.compose.messageText);
+        this.$.launchApplicationService.call({id: "com.palm.app.messaging", params: params});
+    },
+    shareLinkViaFacebook: function () {
+        this.log("sharing via facebok");
+        var params = {
+            type: "status",
+            statusText: $L("Check out this web page: ") + this.url
+        };
+        this.log(params.statusText);
+        this.$.launchApplicationService.call({id: "com.palm.app.enyo-facebook", params: params});
     }
 });
