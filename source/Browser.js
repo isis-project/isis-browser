@@ -86,7 +86,7 @@ enyo.kind({
 			{name: "promptMessage", className: "browser-dialog-body enyo-text-body "},
 			{name: "promptInput", kind: "Input", spellcheck: false, autocorrect: false, autoCapitalize: "lowercase"}
 		]},
-		{name: "shareLinkDialog", kind: "ShareLinkDialog", onShareClicked: "shareLinkResponse"},
+		{name: "shareLinkDialog", kind: "ShareLinkDialog"},
 		{name: "loginDialog", kind: "AcceptCancelPopup", onResponse: "loginResponse", onClose: "closeLogin", components: [
 			{name: "loginMessage", className: "browser-dialog-body enyo-text-body "},
 			{name: "userInput", kind: "Input", spellcheck: false, autocorrect: false, autoCapitalize: "lowercase", hint: $L("Username...")},
@@ -336,13 +336,14 @@ enyo.kind({
 		var params = enyo.json.stringify({dontLaunch:true});
 		enyo.windows.addBannerMessage($L("Link Copied to clipboard"), params);
 	},
-    //TODO: function unused? remove?
+    //handler for the context menu shareLinkClick in BrowserContextMenu.js.
+    //TODO: refactor these for a clearer abstraction. So you don't have to hunt
+    //to see where it is being called.
 	shareLinkClick: function(inTapInfo) {
 		this.shareLink(inTapInfo.linkUrl, inTapInfo.linkText || inTapInfo.linkUrl);
 	},
 	shareLink: function(inUrl, inTitle) {
         this.showShareLinkDialog(inUrl, inTitle);
-		this.log(inUrl, inTitle);
 	},
 	copyToPhotosClick: function(inTapInfo, inPosition) {
 		this.viewCall("saveImageAtPoint", [inPosition.left, inPosition.top, "/media/internal",
