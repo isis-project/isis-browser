@@ -224,7 +224,7 @@ enyo.kind({
 	},
 	browserShown: function(inSender, inShowing, inRefresh) {
 		enyo.keyboard.setResizesWindow(false);
-		// FIXME: there's some weird transition skag. trying to eliminate.
+		// FIXME: there's a transition skag. trying to eliminate.
 		setTimeout(enyo.hitch(this, function() {
 			this.$.browser.viewCall("activate");
 			if (inRefresh || !this.$.browser.getUrl()) {
@@ -528,7 +528,7 @@ enyo.kind({
 		if (this.$.browser) {
 			this.$.browser.clearHistory();
 		}
-		// XXX remove when open search is redesigned - clearing history
+		// remove when open search is redesigned - clearing history
 		// also clears user added search engines
 		this.$.clearOptionalSearchListService.call();
 	},

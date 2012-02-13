@@ -62,10 +62,10 @@ enyo.kind({
 	//* @public
 	resize: function() {
 		this.$.actionbar.resize();
-		// XXX hack to workaround a repaint issue where the area behind
+		// Workaround a repaint issue where the area behind
 		// the keyboard does not get repainted when switch cards, if the
 		// keyboard resizes the window. This is temporary until the native
-		// issue is fixed. (DFISH-17918)
+		// issue is fixed. 
 		var b = enyo.calcModalControlBounds(this.$.tall);
 		this.$.placeholder.applyStyle("height", b.height + "px");
 	},
