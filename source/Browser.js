@@ -451,7 +451,7 @@ enyo.kind({
 		this.doPageLoadStopped(this.url);
 	},
 	loadCompleted: function() {
-		// note: seems to be sent spuriously
+		// empty
 	},
 	clearProgress: function() {
 		this.$.actionbar.setProgress(0);
@@ -494,7 +494,7 @@ enyo.kind({
 		var icon64 = p + "icon64-" + t + ".png";
 		this.viewCall("saveViewToFile", [thumbnail, 0, 0, w, h]);
 		this.viewCall("generateIconFromFile", [thumbnail, icon64, 0, 0, w, h]);
-		//FIXME: do we resize the icon or thumbnail?
+		//FIXME: resize the icon or thumbnail?
 		this.viewCall("resizeImage", [icon64, icon32, 32, 32]);
 		return {thumbnailFile: thumbnail, iconFile32: icon32, iconFile64: icon64};
 		return {};
