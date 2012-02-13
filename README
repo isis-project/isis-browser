@@ -1,3 +1,11 @@
+isis-browser 
+============
+
+isis-browser is the enyo browser app for webOS. 
+
+It uses the enyo WebView control to display web content which in turn
+uses BrowserAdapter and BrowserServer to talk to webOS webkit.
+
 # Copyright and License Information
 
 All content, including all source code files and documentation files in this repository are: 
