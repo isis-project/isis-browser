@@ -114,7 +114,6 @@ enyo.kind({
 		this.setLoading(true);
 		var value = this.getUserInput(true);
 		this.doGo(value);
-		// XXX: I dunno why I have to do this
 		document.activeElement.blur();
 	},
 	getUserInput: function(inRaw) {
@@ -127,7 +126,7 @@ enyo.kind({
 	},
 	clearInput: function() {
 		this.$.userinput.setValue("");
-		// XXX: input is blurred here causing the keyboard to reappear
+		// input is blurred here causing the keyboard to reappear
 		this.$.userinput.forceFocus();
 	},
 	forceFocus: function() {

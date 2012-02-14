@@ -59,7 +59,6 @@ enyo.kind({
 	//* @protected
 	defaultSearchPreferences: [{
 		title: "Google",
-		//url: "http://www.google.com/m/search?client=ms-palm-webOS&channel=bm&q={$query}",
 		url: "http://www.google.com/search?q={$query}",
 		icon: "list-icon-google.png"
 	}, {
@@ -165,7 +164,7 @@ enyo.kind({
 			if (!provider) {
 				return;
 			}
-			// FIXME: this is a pita to have to set top-bottom item styling
+			// FIXME: set top-bottom item styling
 			var s = inIndex == 0 ? "border-top: 0;" : (inIndex == list.length-1 ? "border-bottom: 0;" : "");
 			// title
 			var v = this.$.address.getUserInput(true);
@@ -237,7 +236,7 @@ enyo.kind({
 	},
 	//* public
 	resize: function() {
-		// XXX need to handle resize manually here because the
+		// need to handle resize manually here because the
 		// search dropdown needs to match the width of the
 		// address bar, and Popup doesn't have a minSize
 		// setting yet
@@ -253,7 +252,7 @@ enyo.kind({
 	},
 	closeSearchPopup: function(inKeepFocus) {
 		this.log(inKeepFocus);
-		// FIXME: try to eliminate some weird transition artifact
+		// FIXME: eliminate transition artifact
 		setTimeout(enyo.hitch(this, function() {
 			if (this.$.searchPopup.isOpen) {
 				this.$.searchPopup.close();
