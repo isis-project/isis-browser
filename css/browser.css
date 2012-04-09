@@ -275,6 +275,24 @@
 	padding: 11px; /* make the tappable area to 48x48 */
 }
 
+/* Share Link */
+.box-center {
+    width:180px;
+    margin:30px auto 0;
+    margin-bottom: 30px;
+}
+.icon-image {
+    display:block;
+    margin-right:10px;
+}
+.app-exists-spinner {
+    margin-left: 5px;
+}
+.download-button {
+    background: url("../images/icons/download-icon.png") 0px 0px no-repeat;
+    width: 32px;
+    height: 32px;
+}
 /* History */
 
 /* Downloads */

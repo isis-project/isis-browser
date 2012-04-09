@@ -86,6 +86,7 @@ enyo.kind({
 			{name: "promptMessage", className: "browser-dialog-body enyo-text-body "},
 			{name: "promptInput", kind: "Input", spellcheck: false, autocorrect: false, autoCapitalize: "lowercase"}
 		]},
+		{name: "shareLinkDialog", kind: "ShareLinkDialog"},
 		{name: "loginDialog", kind: "AcceptCancelPopup", onResponse: "loginResponse", onClose: "closeLogin", components: [
 			{name: "loginMessage", className: "browser-dialog-body enyo-text-body "},
 			{name: "userInput", kind: "Input", spellcheck: false, autocorrect: false, autoCapitalize: "lowercase", hint: $L("Username...")},
@@ -234,6 +235,10 @@ enyo.kind({
 		this.$.promptInput.setHint(inDefaultValue);
 		this.showPopup(this.$.promptDialog);
 	},
+    showShareLinkDialog: function(inUrl, inTitle) {
+        this.$.shareLinkDialog.init(inUrl, inTitle);
+        this.showPopup(this.$.shareLinkDialog);
+    },
 	promptResponse: function(inAccept) {
 		this.sendDialogResponse(this, inAccept, this.$.promptInput.getValue() || this.$.promptInput.getHint());
 	},
@@ -331,19 +336,14 @@ enyo.kind({
 		var params = enyo.json.stringify({dontLaunch:true});
 		enyo.windows.addBannerMessage($L("Link Copied to clipboard"), params);
 	},
+    //handler for the context menu shareLinkClick in BrowserContextMenu.js.
+    //TODO: refactor these for a clearer abstraction. So you don't have to hunt
+    //to see where it is being called.
 	shareLinkClick: function(inTapInfo) {
 		this.shareLink(inTapInfo.linkUrl, inTapInfo.linkText || inTapInfo.linkUrl);
 	},
 	shareLink: function(inUrl, inTitle) {
-		this.log(inUrl, inTitle);
-		var msg = $L("Here's a website I think you'll like: <a href=\"{$src}\">{$title}</a>");
-		msg = enyo.macroize(msg, {src: inUrl, title: inTitle || inUrl});
-		var params = {
-			summary: $L("Check out this web page..."),
-			text: msg
-		};
-		this.log(params.text);
-		this.$.launchApplicationService.call({id: "com.palm.app.email", params: params});
+        this.showShareLinkDialog(inUrl, inTitle);
 	},
 	copyToPhotosClick: function(inTapInfo, inPosition) {
 		this.viewCall("saveImageAtPoint", [inPosition.left, inPosition.top, "/media/internal",

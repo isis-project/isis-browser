@@ -34,6 +34,7 @@ enyo.depends(
 	"source/VerticalAcceptCancelPopup.js",
 	"source/BrowserPrompt.js",
 	"source/BookmarkDialog.js",
+    "source/ShareLinkDialog.js",
 	"source/NoFocusButton.js",
 	"source/clipboard.js",
 	"source/util.js",
