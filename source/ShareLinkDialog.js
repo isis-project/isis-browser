@@ -22,17 +22,34 @@ enyo.kind({
     SHARE_LINK_LIST: [{
         title: $L("Email"), 
         image: "images/icons/email-32x32.png", 
-        type: "email"
+        type: "email",
+        exists: true
     },{
         title: $L("Messaging"), 
         image: "images/icons/messaging-32x32.png",
-        type: "messaging"
+        type: "messaging",
+        exists: true
     },{
         title: "Facebook",
         image: "images/icons/facebook-32x32.png",
-        type: "facebook"
+        type: "facebook",
+        checkExistance: true
     }],
     components: [{
+		name: "appCatalogService",
+        kind: enyo.PalmService,
+        service: "palm://com.palm.applicationManager",
+        method: "launch",
+        onSuccess: "launchAppCatalogSuccess",
+        onFailure: "launchAppCatalogError"
+    },{
+        name: "listApplicationsService",
+        kind: enyo.PalmService,
+        service: enyo.palmServices.application,
+        onSuccess: "listApplicationsSuccess",
+        onFailure: "listApplicationsError",
+        method: "listApps"
+    }, {
 		name: "launchApplicationService",
         kind: enyo.PalmService,
         service: enyo.palmServices.application,
@@ -50,17 +67,36 @@ enyo.kind({
             kind: "VirtualRepeater", 
             onclick: "shareButtonClicked", 
             onSetupRow: "getItem", 
+            layoutKind: "HFlexLayout",
+            align: "center",
             components: [{
-                kind: "Button",
+                name: "item",
+                kind: "Control",
                 layoutKind: "HFlexLayout",
-                align:"center",
+                align: "center",
                 components: [{
-                    name: "icon",
-                    kind: "Image",
-                    className: "icon-image"
+                    name: "button",
+                    kind: "Button",
+                    layoutKind: "HFlexLayout",
+                    align:"center",
+                    flex: 1,
+                    components: [{
+                        name: "icon",
+                        kind: "Image",
+                        className: "icon-image"
+                    }, {
+                        name: "caption",
+                    }, {
+                        name: "spinner",
+                        kind: "Spinner",
+                        className: "app-exists-spinner"
+                    }]   
                 }, {
-                    name: "caption",
-                }]   
+                    name: "downloadButton",
+                    kind: "CustomButton",
+                    showing: false,
+                    className: "download-button"
+                }]
             }]
         }]
     }],
@@ -70,21 +106,48 @@ enyo.kind({
         this.url = url;
         this.title = title;
     },
+    open: function () {
+        this.inherited(arguments);
+        this.getListApplications();
+    },
+    getListApplications: function () {
+        this.$.listApplicationsService.call();
+    },
     getItem: function (inSender, inIndex) {
         if (inIndex < this.SHARE_LINK_LIST.length) {
             if (!this.$.shareMessage.getContent()) {
                 this.$.shareMessage.setContent("Share link via");
             }
 
+            this.$.downloadButton.hide();
+
             var itemDefinition = this.SHARE_LINK_LIST[inIndex];
             this.$.icon.setSrc(itemDefinition.image);
+            if (itemDefinition.checkExistance) {
+                this.$.button.setDisabled(true);
+                this.$.spinner.show();
+            } else {
+                this.$.button.setDisabled(!itemDefinition.exists);
+                if (!itemDefinition.exists) {
+                    this.$.downloadButton.show();
+                }
+                this.$.spinner.hide();
+            }
             this.$.caption.setContent(itemDefinition.title);
             return true;
         }
     },
     shareButtonClicked: function (inSender, inEvent) {
-        var shareServiceType = this.SHARE_LINK_LIST[inEvent.rowIndex].type;
-        this.log("share service type - " + shareServiceType);
+        var shareService = this.SHARE_LINK_LIST[inEvent.rowIndex];
+        var shareServiceType = shareService.type;
+
+        if (!shareService.exists) {
+            if (shareServiceType === "facebook") {
+                this.downloadFacebookApp();
+            }
+            return true;
+        }
+        
         if (shareServiceType === "email") {
             this.shareLinkViaEmail();
         } else if (shareServiceType === "messaging") {
@@ -101,7 +164,6 @@ enyo.kind({
 			summary: $L("Check out this web page..."),
 			text: msg
 		};
-		this.log(params.text);
 		this.$.launchApplicationService.call({id: "com.palm.app.email", params: params});
     },
     shareLinkViaMessaging: function () {
@@ -110,18 +172,49 @@ enyo.kind({
                 messageText: $L("Check out this web page: ") + this.url
             }
         };
-        this.log(params.compose.messageText);
         this.$.launchApplicationService.call({id: "com.palm.app.messaging", params: params});
     },
-    //TODO: handle where there is no facebook app installed on device.
-    //should launch app catalog and go to facebook install page.
     shareLinkViaFacebook: function () {
-        this.log("sharing via facebok");
         var params = {
             type: "status",
             statusText: $L("Check out this web page: ") + this.url
         };
-        this.log(params.statusText);
         this.$.launchApplicationService.call({id: "com.palm.app.enyo-facebook", params: params});
-    }
+    },
+    downloadFacebookApp: function () {
+        this.log("Launching app catalog to download facebook");
+        this.$.appCatalogService.call({id: "com.palm.app.enyo-findapps", params: {
+            target: "http://developer.palm.com/appredirect/?packageid=com.palm.app.enyo-facebook"
+        }});
+    },
+    listApplicationsSuccess: function (inSender, inResponse) {
+        var apps = inResponse.apps;
+        foundFacebook = apps.some(function (app) {
+            this.log(enyo.json.stringify(app));
+            if (app.id === "com.palm.app.enyo-facebook") {
+
+                this.SHARE_LINK_LIST.some(function (shareService, index) {
+                    if (shareService.title === "Facebook") {
+                        shareService.exists = true;
+                        shareService.checkExistance = false;
+                        this.$.shareList.renderRow(index);
+                    }
+                }, this);
+                return true;
+            }
+        }, this);
+
+        if (!foundFacebook) {
+            this.SHARE_LINK_LIST.some(function (shareService, index) {
+                if (shareService.title === "Facebook") {
+                    shareService.exists = false;
+                    shareService.checkExistance = false;
+                    this.$.shareList.renderRow(index);
+                }
+            }, this);
+        }
+    },
+    launchAppCatalogSuccess: function (inSender, inResponse) {
+        this.close();
+    } 
 });

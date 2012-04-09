@@ -285,6 +285,14 @@
     display:block;
     margin-right:10px;
 }
+.app-exists-spinner {
+    margin-left: 5px;
+}
+.download-button {
+    background: url("../images/icons/download-icon.png") 0px 0px no-repeat;
+    width: 32px;
+    height: 32px;
+}
 /* History */
 
 /* Downloads */
