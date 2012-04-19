@@ -1,0 +1,15 @@
+Source: isisbrowser
+Section: webOS
+Priority: extra
+Maintainer: Anupam <anupam.kaul@palm.com>
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.2
+Homepage: https://github.com/isis-project/isis-browser
+#Vcs-Git: git://git.debian.org/collab-maint/isisbrowser.git
+#Vcs-Browser: http://git.debian.org/?p=collab-maint/isisbrowser.git;a=summary
+
+Package: isisbrowser
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: sis-browser is the enyo browser app for webOS
+

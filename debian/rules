@@ -1,0 +1,54 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+# Sample debian/rules that uses debhelper.
+# This file was originally written by Joey Hess and Craig Small.
+# As a special exception, when this file is copied by dh-make into a
+# dh-make output file, you may use that output file without restriction.
+# This special exception was added by Craig Small in version 0.37 of dh-make.
+
+# Uncomment this to turn on verbose mode.
+export DH_VERBOSE=1
+export DEB_APP_DIR=debian/isisbrowser/usr/openwebos/applications/isisbrowser
+
+%:
+	dh $@ 
+
+.PHONY: override_dh_auto_build override_dh_auto_test override_dh_install
+
+override_dh_auto_build:
+
+override_dh_auto_test:
+
+override_dh_auto_clean:
+
+override_dh_install:
+
+override_dh_auto_install:
+
+override_dh_installdirs:
+	install -d $(DEB_APP_DIR)
+	install -m 444 ./*.json $(DEB_APP_DIR)
+	install -m 444 ./*.js $(DEB_APP_DIR)
+	install -m 444 ./*.png $(DEB_APP_DIR)
+	install -m 444 ./*.html $(DEB_APP_DIR)
+	install -m 444 ./*.md $(DEB_APP_DIR)
+	install -d $(DEB_APP_DIR)/css
+	install -m 444 ./css/* $(DEB_APP_DIR)/css
+	install -d $(DEB_APP_DIR)/images
+	install -m 444 ./images/*.png $(DEB_APP_DIR)/images
+	install -d $(DEB_APP_DIR)/images/chrome
+	install -m 444 ./images/chrome/* $(DEB_APP_DIR)/images/chrome
+	install -d $(DEB_APP_DIR)/images/icons
+	install -m 444 ./images/icons/* $(DEB_APP_DIR)/images/icons
+	install -d $(DEB_APP_DIR)/source
+	install -m 444 ./source/* $(DEB_APP_DIR)/source
+	install -d $(DEB_APP_DIR)/db/kinds
+	install -m 444 ./db/kinds/* $(DEB_APP_DIR)/db/kinds
+	install -d $(DEB_APP_DIR)/db/permissions
+	install -m 444 ./db/permissions/* $(DEB_APP_DIR)/db/permissions
+
+
+
+
+	
+	

@@ -1,0 +1,5 @@
+isisbrowser (1.0.0-1) unstable; urgency=low
+
+  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+
+ -- Anupam <anupam.kaul@palm.com>  Wed, 18 Apr 2012 17:51:50 -0700
