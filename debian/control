@@ -11,5 +11,5 @@ Homepage: https://github.com/isis-project/isis-browser
 Package: isisbrowser
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: sis-browser is the enyo browser app for webOS
+Description: isis-browser is the enyo browser app for webOS
 
