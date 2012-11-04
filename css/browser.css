@@ -26,7 +26,7 @@
 .startpage {
 	background: #313131 url(../images/background-startpage.png) center center no-repeat ;
 	-webkit-background-size: 100% 100%;
-	height: 1024px;
+	height: 100%;
 	/*
 	background-color: #323232;
 	background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 250, from(#5c5d5f), color-stop(0.1, #3c3c3c), to(#101010));
@@ -38,7 +38,7 @@
 }
 
 .startpage .startpage-placeholder-tall {
-	height: 1024px;
+	height: 100%;
 }
 
 /* AddressBar */
